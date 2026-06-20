@@ -1,0 +1,16 @@
+[include]
+    path = ~/.config/git/aliases.cfg
+    path = ~/.config/git/colors.cfg
+
+[init]
+    defaultBranch = main
+
+[user]
+    name = Even Ytterli Tokle
+    email = git@tokle.io
+
+[credential] 
+    helper = /usr/bin/git-credential-manager
+
+[credential "https://dev.azure.com"]
+    useHttpPath = true
