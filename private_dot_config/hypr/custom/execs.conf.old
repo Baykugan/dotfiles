@@ -1,0 +1,6 @@
+# You can make apps auto-start here
+# Relevant Hyprland wiki section: https://wiki.hyprland.org/Configuring/Keywords/#executing
+
+exec = hyprctl keyword decoration:blur:enabled 0
+
+exec-once = ~/.config/hyprland/hooks/gnome-keyring.sh

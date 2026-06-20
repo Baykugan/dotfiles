@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+dir="$1"
+
+current="$(
+  hyprctl activeworkspace -j | python3 -c '
+import json, sys
+print(json.load(sys.stdin)["id"])
+'
+)"
+
+# Highest positive workspace that currently has windows.
+# This makes the limit "one past the last used workspace".
+last_used="$(
+  hyprctl workspaces -j | python3 -c '
+import json, sys
+workspaces = json.load(sys.stdin)
+ids = [
+    w["id"]
+    for w in workspaces
+    if w.get("id", 0) > 0 and w.get("windows", 0) > 0
+]
+print(max(ids) if ids else 1)
+'
+)"
+
+max_allowed=$((last_used + 1))
+
+case "$dir" in
+  up)
+    # Do not go through from workspaces 1-10.
+    if (( current < 11 )); then
+      exit 0
+    fi
+
+    target=$((current - 10))
+    ;;
+
+  down)
+    target=$((current + 10))
+
+    # Do not go further than one past the last used workspace.
+    if (( target > max_allowed )); then
+      exit 0
+    fi
+    ;;
+
+  *)
+    exit 1
+    ;;
+esac
+
+hyprctl dispatch workspace "$target"
