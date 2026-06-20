@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+#
+# Script:    chedit
+# Purpose:   Edit chezmoi source, review diff, and optionally apply changes.
+# Usage:     chmod +x chedit
+#            ./chedit
+
+set -euo pipefail
+
+require_cmd() {
+  if ! command -v "$1" >/dev/null 2>&1; then
+    echo "Error: '$1' not found in PATH." >&2
+    exit 1
+  fi
+}
+
+require_cmd chezmoi
+require_cmd code
+
+source_dir="$(chezmoi source-path)"
+
+if [[ ! -d "$source_dir" ]]; then
+  echo "Error: chezmoi source directory '$source_dir' does not exist." >&2
+  exit 1
+fi
+
+cd "$source_dir"
+
+echo "Opening chezmoi source in VS Code..."
+code --wait .
+
+echo
+echo "==================== chezmoi diff ===================="
+
+diff_output="$(chezmoi diff --color=false)"
+
+if [[ -z "$diff_output" ]]; then
+  echo "                 No changes detected."
+  echo "======================================================"
+  exit 0
+fi
+
+if command -v diff-so-fancy >/dev/null 2>&1; then
+  chezmoi diff --color=true | diff-so-fancy
+else
+  chezmoi diff --color=true
+fi
+
+echo "======================================================"
+echo
+
+read -r -p "Apply these changes to your home directory? [y/N] " response
+
+case "$response" in
+  [yY]|[yY][eE][sS]*)
+    echo "Applying changes..."
+    chezmoi apply
+    echo "Done."
+
+    echo "Running chezmoi re-add..."
+    chezmoi re-add
+    echo "Done."
+    ;;
+  *)
+    echo "Aborting. No changes applied."
+    exit 0
+    ;;
+esac
+
+echo
+echo "==================== git status ===================="
+git status --short
+echo "===================================================="
