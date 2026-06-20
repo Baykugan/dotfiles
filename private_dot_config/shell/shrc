@@ -1,0 +1,63 @@
+#!/usr/bin/env sh
+
+#
+# ~/.config/shell/shrc
+#
+# Put this file in both your ~/.bashrc and ~/.zshrc (see “Usage” below).
+# It will:
+#   • Skip non-interactive shells,
+#   • Detect whether it’s running under Bash or Zsh,
+#   • Enable the right globbing options,
+#   • Recursively source POSIX snippets,
+#   • Then recursively source either bashrc.d/ or zshrc.d/.
+#
+# Anything here must be valid in both Bash and Zsh (no Bash- or Zsh-only constructs).
+
+# ─── 1. Don’t run in a non-interactive shell ──────────────────────────────────
+# Note: both Bash and Zsh set $- to include “i” when interactive.
+[[ $- != *i* ]] && return
+
+# ─── 2. Detect which shell we’re in ───────────────────────────────────────────
+is_bash() { [[ -n "$BASH_VERSION" ]]; }
+is_zsh()  { [[ -n "$ZSH_VERSION" ]]; }
+
+if is_bash; then
+  # echo "Loading Bash configuration…"
+  RESOURCE_DIR="$HOME/.config/shell/bashrc.d"
+elif is_zsh; then
+  # echo "Loading Zsh configuration…"
+  RESOURCE_DIR="$HOME/.config/shell/zshrc.d"
+else
+  # echo "Unsupported shell (only Bash and Zsh are supported)."
+  return
+fi
+
+# ─── 3. Enable the right globbing options ─────────────────────────────────────
+if is_bash; then
+  # Bash: allow ** to recurse and let globs vanish if no match
+  shopt -s globstar nullglob extglob
+elif is_zsh; then
+  # Zsh: enable recursive ** and extended-glob syntax (usually on by default)
+  setopt extended_glob nullglob
+fi
+
+# ─── 4. Recursively source “POSIX” snippets from shrc.d/ ───────────────────────
+if [[ -d "$HOME/.config/shell/shrc.d" ]]; then
+  for f in "$HOME"/.config/shell/shrc.d/**/*; do
+    if [[ -f "$f" && -r "$f" ]]; then
+      # echo "-> Loading POSIX snippet: ${f#$HOME/.config/shell/shrc.d/}"
+      source "$f"
+    fi
+  done
+fi
+
+# ─── 5. Recursively source shell-specific snippets (bashrc.d/ or zshrc.d/) ────
+if [[ -d "$RESOURCE_DIR" ]]; then
+  for f in "$RESOURCE_DIR"/**/*; do
+    if [[ -f "$f" && -r "$f" ]]; then
+      # “${RESOURCE_DIR##*/}” expands to either “bashrc.d” or “zshrc.d”
+      # echo "-> Loading ${RESOURCE_DIR##*/} snippet: ${f#$HOME/.config/shell/}"
+      source "$f"
+    fi
+  done
+fi

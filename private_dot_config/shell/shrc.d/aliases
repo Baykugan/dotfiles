@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+
+# Movement
+alias ..='cd ..'
+alias ...='cd ../..' 
+alias .4='cd ../../..'
+alias .5='cd ../../../..'
+
+
+# Paru
+alias yoink='paru -S'
+alias yeet='paru -Rcns'
+# alias yay='paru -U'
+peep() {
+	paru -Q | grep "$1"
+}
+
+# Dooit
+alias dooit='dooit --config ~/.config/dooit/Nord.py'

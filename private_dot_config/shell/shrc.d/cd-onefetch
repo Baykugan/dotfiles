@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+
+#
+# ~/.config/shell/shrc.d/cd-onefetch
+# Overrides for cd command to run onefetch on cd into a git repository
+#
+
+LAST_REPO=""
+
+cd() {
+    if ! builtin cd "$@"; then
+        return $?
+    fi
+
+    local repo_root
+    repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+        LAST_REPO=""
+        return
+    }
+
+    local repo_name
+    repo_name=$(basename "$repo_root")
+
+    if [ "$repo_name" != "$LAST_REPO" ]; then
+        onefetch
+        LAST_REPO="$repo_name"
+    fi
+}

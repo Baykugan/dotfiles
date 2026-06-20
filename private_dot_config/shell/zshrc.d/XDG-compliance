@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+#
+# ~/.config/shell/zshrc.d/XDG-compliance
+# Ensures compliance with XDG Base Directory Specification
+# This script sets zsh-specific environment variables
+#
+
+
+export HISTFILE="${XDG_STATE_HOME}"/zsh/history
+compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+

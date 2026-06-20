@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+#
+# ~/.config/shell/shrc.d/PATH-modification
+# Modifications to the PATH environment variable
+#
+
+# Added by Toolbox App
+export PATH="$PATH:/home/Enki/.local/share/JetBrains/Toolbox/scripts"
+
+# uv
+export PATH="/home/Enki/.local/bin:$PATH"
+
+# XDG standards
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"

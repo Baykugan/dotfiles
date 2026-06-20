@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#
+# ~/.config/shell/bashrc.d/XDG-compliance
+# Ensures compliance with XDG Base Directory Specification
+# This script sets bash-specific environment variables
+#
+
+
+export HISTFILE="${XDG_STATE_HOME}"/bash/history

@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+#
+# ~/.config/shell/bashrc.d/fzf
+#
+
+
+# Place these functions in your ~/.fzf.bash or ~/.fzf.zsh (before sourcing fzf’s completion script)
+
+# ─── _fzf_compgen_path (fd → rg → find fallback, no exclusions) ───────────────
+_fzf_compgen_path() {
+  local base="$1"
+
+  # 1) Primary: use 'fd' if available
+  if command -v fd &>/dev/null; then
+    fd --hidden --follow \
+       --base-directory "$base" \
+       --type f --type d --type l \
+       "" 
+    return
+  fi
+
+  # 2) Fallback: use 'rg' if available (lists files only, but we'll include them)
+  if command -v rg &>/dev/null; then
+    (
+      cd "$base" || return
+      rg --files --hidden --follow .
+    )
+    return
+  fi
+
+  echo "$1"
+  command find -L "$1" \
+    -name .git -prune -o -name .hg -prune -o -name .svn -prune -o \( -type d -o -type f -o -type l \) \
+    -a -not -path "$1" -print 2> /dev/null | sed 's@^\./@@'
+}
+
+
+# ─── _fzf_compgen_dir (fd → rg → find fallback, no exclusions) ────────────────
+_fzf_compgen_dir() {
+  local base="$1"
+
+  # 1) Primary: use 'fd' if available
+  if command -v fd &>/dev/null; then
+    fd --hidden --follow \
+       --base-directory "$base" \
+       --type d \
+       ""
+    return
+  fi
+
+  # 2) Fallback: use 'rg' if available (derive dirs from file list)
+  if command -v rg &>/dev/null; then
+    (
+      cd "$base" || return
+      rg --files --hidden --follow . \
+      | awk '
+          {
+            if (match($0, /\/[^/]*$/)) {
+              d = substr($0, 1, RSTART-1)
+              if (!seen[d]++) print d
+            }
+          }
+        '
+    )
+    return
+  fi
+
+  command find -L "$1" \
+    -name .git -prune -o -name .hg -prune -o -name .svn -prune -o -type d \
+    -a -not -path "$1" -print 2> /dev/null | sed 's@^\./@@'
+}
+
+
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --bash)"
+
+
+# To use custom commands instead of find, override _fzf_compgen_{path,dir}
+#
+#   _fzf_compgen_path() {
+#     echo "$1"
+#     command find -L "$1" \
+#       -name .git -prune -o -name .hg -prune -o -name .svn -prune -o \( -type d -o -type f -o -type l \) \
+#       -a -not -path "$1" -print 2> /dev/null | sed 's@^\./@@'
+#   }
+#
+#   _fzf_compgen_dir() {
+#     command find -L "$1" \
+#       -name .git -prune -o -name .hg -prune -o -name .svn -prune -o -type d \
+#       -a -not -path "$1" -print 2> /dev/null | sed 's@^\./@@'
+#   }

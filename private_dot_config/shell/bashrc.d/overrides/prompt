@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+#
+# ~/.config/shell/bashrc.d/overrides/prompt
+#
+
+PS1='[\u@\h \W]\$ '

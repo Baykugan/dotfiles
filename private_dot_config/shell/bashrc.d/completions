@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+#
+# ~/.config/shell/bashrc.d/completions
+#
+
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+  . /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
+
+# ─── Bash “shopt” tweaks ─────────────────────────────────────────────────────────
+
+# 1) Autocd: typing a directory name alone will cd into it
+shopt -s autocd
+
+# 2) no_empty_cmd_completion: don’t try completing when the line is empty
+shopt -s no_empty_cmd_completion
+
+# 3) globstar: allow ** to match recursively (like zsh’s **)
+shopt -s globstar
+
+# 4) extglob: enable extended globbing features
+shopt -s extglob  
+# ────────────────────────────────────────────────────────────────────────────────

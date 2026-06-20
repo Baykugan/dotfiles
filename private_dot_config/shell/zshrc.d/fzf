@@ -1,0 +1,112 @@
+#!/usr/bin/env zsh
+#
+# ~/.config/shell/zshrc.d/fzf
+#
+
+source <(fzf --zsh)
+
+_fzf_compgen_path() {
+  fd --hidden --follow \
+    --exclude ".git" \
+    # --exclude "steamapps" \
+    . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow \
+    --exclude ".git" \
+    # --exclude "steamapps" \
+    . "$1"
+}
+
+# arcticicestudio/nord-vim
+export FZF_DEFAULT_OPTS='--color=bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88,fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1,marker:#81A1C1,fg+:#D8DEE9,prompt:#81A1C1,hl+:#81A1C1'
+
+
+# Preview file content using bat (https://github.com/sharkdp/bat)
+export FZF_CTRL_T_OPTS="
+  --walker file,follow,hidden
+  --walker-skip .git,node_modules,target
+  --style=full 
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --style=full 
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+# Print tree structure in the preview window
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target
+  --style=full 
+  --preview 'tree -C {}'"
+
+# Options to fzf command
+export FZF_COMPLETION_OPTS='--style=full --border --info=inline'
+
+# Options for path completion (e.g. vim **<TAB>)
+export FZF_COMPLETION_PATH_OPTS='--walker file,dir,follow,hidden'
+
+# Options for directory completion (e.g. cd **<TAB>)
+export FZF_COMPLETION_DIR_OPTS='--walker dir,follow'
+
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments ($@) to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
+  esac
+}
+
+
+# Set AUR helper (change to your preferred AUR helper)
+export AUR_HELPER=paru
+
+# Install packages using $AUR_HELPER
+function in() {
+  local pkgs
+  pkgs=$("$AUR_HELPER" -Slq | fzf -q "$1" -m \
+    --style full \
+    --preview '"$AUR_HELPER" -Si {} 2>/dev/null' \
+    --preview-window=wrap:border-left)
+
+  [[ -z "$pkgs" ]] && echo "Aborted." && return
+
+  echo "$pkgs" | tee /dev/tty
+  echo -n "Install these packages? [y/N] "
+  read yn
+  if [[ "$yn" =~ ^[Yy]([Ee][Ss])?$ ]]; then
+    echo "$pkgs" | xargs "$AUR_HELPER" -S
+  else
+    echo "Aborted"
+  fi
+}
+
+# Remove installed packages using $AUR_HELPER
+function re() {
+  "$AUR_HELPER" -Qq | fzf -q "$1" -m \
+    --style full \
+    --preview '"$AUR_HELPER" -Qi {} 2>/dev/null' \
+    --bind 'alt-u:change-preview(pactree -cru {} 2>/dev/null)' \
+    --bind 'alt-i:change-preview(\"$AUR_HELPER\" -Qi {} 2>/dev/null)' \
+    --header 'Alt-U: uninstalled reverse deps │ Alt-I: package info' \
+  | xargs -ro | tee /dev/tty 
+  echo -n "Remove these packages? [y/N] "
+  read yn
+  if [[ "$yn" =~ ^[Yy]([Ee][Ss])?$ ]]; then
+    echo "$pkgs" | xargs "$AUR_HELPER" -Rns
+  else
+    echo "Aborted."
+  fi
+}

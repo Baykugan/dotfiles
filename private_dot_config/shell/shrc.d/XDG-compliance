@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+#
+# ~/.config/shell/shrc.d/XDG-compliance
+# Ensures compliance with XDG Base Directory Specification
+#
+
+
+export HISTFILE="${XDG_STATE_HOME}"/bash/history
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+alias xonsh="xonsh --rc $XDG_CONFIG_HOME/xonsh/xonshrc"
+alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export DOTNET_CLI_HOME="$XDG_DATA_HOME"/dotnet
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc

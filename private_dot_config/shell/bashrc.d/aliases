@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+#
+# ~/.config/bash/aliases
+#
+
+# Color
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# General
+alias ll='ls -lah'
+alias desktop='startplasma-wayland'
+
+
+
