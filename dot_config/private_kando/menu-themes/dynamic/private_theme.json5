@@ -31,10 +31,10 @@
   // These colors can be configured by the user and are vailable in the CSS file as CSS
   // variables. The default values are used if the user does not provide any values.
   colors: {
-    'background-color': 'rgb(19, 19, 21)',
-    'text-color': 'rgb(229, 225, 227)',
-    'border-color': 'rgb(146, 144, 146)',
-    'hover-color': 'rgb(197, 197, 214)',
+    'background-color': 'rgb(16, 20, 24)',
+    'text-color': 'rgb(225, 226, 232)',
+    'border-color': 'rgb(141, 145, 153)',
+    'hover-color': 'rgb(160, 202, 253)',
   },
 
   // This theme is very simple and only uses one layer for the menu items.
