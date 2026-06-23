@@ -80,7 +80,7 @@
             "workspaceZoom": 1
         },
         "thumbnailPath": "",
-        "wallpaperPath": "/home/Enki/Pictures/Wallpapers/Powerking.jpg",
+        "wallpaperPath": "/home/enki/Pictures/Wallpapers/Powerking.jpg",
         "widgets": {
             "clock": {
                 "cookie": {
@@ -383,7 +383,7 @@
         "updateInterval": 3000
     },
     "screenRecord": {
-        "savePath": "/home/Enki/Videos"
+        "savePath": "/home/enki/Videos"
     },
     "screenSnip": {
         "savePath": ""

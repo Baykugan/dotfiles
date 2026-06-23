@@ -38,7 +38,7 @@ end
 
 # Warm up images
 printf '\033_Ga=T,t=f,c=1,r=1,q=2;%s\033\\' \
-  "$(printf '%s' '/home/Enki/.cache/fastfetch/logo.png' | base64 -w0)" \
+  "$(printf '%s' '/home/enki/.cache/fastfetch/logo.png' | base64 -w0)" \
   > /dev/tty
 
 fastfetch

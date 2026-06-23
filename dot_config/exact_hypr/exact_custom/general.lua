@@ -15,7 +15,7 @@ hl.gesture({
   fingers = 3,
   direction = "down",
   action = function()
-    hl.exec_cmd("/home/Enki/.config/hypr/custom/scripts/workspace_by_10 up")
+    hl.exec_cmd("/home/enki/.config/hypr/custom/scripts/workspace_by_10 up")
   end,
 })
 
@@ -23,7 +23,7 @@ hl.gesture({
   fingers = 3,
   direction = "up",
   action = function()
-    hl.exec_cmd("/home/Enki/.config/hypr/custom/scripts/workspace_by_10 down")
+    hl.exec_cmd("/home/enki/.config/hypr/custom/scripts/workspace_by_10 down")
   end,
 })
 

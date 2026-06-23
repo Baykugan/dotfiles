@@ -6,10 +6,10 @@
 #
 
 # Added by Toolbox App
-export PATH="$PATH:/home/Enki/.local/share/JetBrains/Toolbox/scripts"
+export PATH="$PATH:/home/enki/.local/share/JetBrains/Toolbox/scripts"
 
 # uv
-export PATH="/home/Enki/.local/bin:$PATH"
+export PATH="/home/enki/.local/bin:$PATH"
 
 # XDG standards
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
