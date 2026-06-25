@@ -1,3 +1,37 @@
+[data]
+{{- if eq .chezmoi.hostname "Abzu" }}
+desktop_profile = "hyprland"
+hypr_profile = "illogical-impulse"
+distro = "arch"
+
+bash_profile = "minimal"
+zsh_profile = "minimal"
+fish_profile = "full"
+
+{{- else if eq .chezmoi.hostname "Tehom" }}
+desktop_profile = "kde"
+distro = "nobara"
+
+bash_profile = "full"
+zsh_profile = "full"
+fish_profile = "full"
+
+
+{{- else if eq .chezmoi.hostname "Kontoret" }}
+desktop_profile = "hyprland"
+hypr_profile = "kooldots"
+distro = "debian"
+
+bash_profile = "minimal"
+zsh_profile = "none"
+fish_profile = "none"
+
+
+{{- else }}
+desktop_profile = "none"
+distro = "unknown"
+{{- end }}
+
 [git]
-	autoCommit = false
-	autoPush = false
+autoCommit = false
+autoPush = false
