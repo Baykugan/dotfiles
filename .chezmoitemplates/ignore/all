@@ -1,0 +1,3 @@
+{{ template "ignore/shells" . }}
+{{ template "ignore/hyprland" . }}
+{{ template "ignore/desktop" . }}

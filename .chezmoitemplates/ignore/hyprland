@@ -1,0 +1,49 @@
+{{- $hyprKooldots := list
+  ".config/ags/"
+  ".config/ags/**"
+}}
+
+{{- $hyprIllogicalImpulse := list
+  ".config/quickshell/"
+  ".config/quickshell/**"
+  ".config/illogical-impulse/"
+  ".config/illogical-impulse/**"
+}}
+
+{{- $hyprBase := list
+  ".config/hypr/"
+  ".config/hypr/**"
+  ".config/waybar/"
+  ".config/waybar/**"
+  ".config/hyprpaper/"
+  ".config/hyprpaper/**"
+  ".config/hypridle/"
+  ".config/hypridle/**"
+  ".config/hyprlock/"
+  ".config/hyprlock/**"
+  ".config/zshrc.d/auto-Hypr.sh"
+  ".config/zshrc.d/dots-hyprland.zsh"
+  ".config/bashrc.d/auto-Hypr.sh"
+}}
+
+{{- $hyprAll := concat $hyprBase $hyprKooldots $hyprIllogicalImpulse }}
+
+{{- if ne .desktop_profile "hyprland" }}
+{{- range $hyprAll }}
+{{ . }}
+{{- end }}
+{{- else }}
+
+{{- if ne .hypr_profile "kooldots" }}
+{{- range $hyprKooldots }}
+{{ . }}
+{{- end }}
+{{- end }}
+
+{{- if ne .hypr_profile "illogical-impulse" }}
+{{- range $hyprIllogicalImpulse }}
+{{ . }}
+{{- end }}
+{{- end }}
+
+{{- end }}

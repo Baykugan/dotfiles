@@ -1,0 +1,23 @@
+{{- $zshOnly := list
+  ".config/zshrc.d/"
+  ".config/zshrc.d/**"
+  ".zshrc"
+}}
+
+{{- $bashOnly := list
+  ".config/bashrc.d/"
+  ".config/bashrc.d/**"
+  ".bashrc"
+}}
+
+{{- if not (has "zsh" .shells) }}
+{{- range $zshOnly }}
+{{ . }}
+{{- end }}
+{{- end }}
+
+{{- if not (has "bash" .shells) }}
+{{- range $bashOnly }}
+{{ . }}
+{{- end }}
+{{- end }}
