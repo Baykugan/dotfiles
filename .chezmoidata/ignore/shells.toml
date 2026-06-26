@@ -40,12 +40,19 @@ core = [
 
 extras = [
     ".config/fish/completions/",
+    ".config/fish/completions/**",
+
     ".config/fish/conf.d/",
+    ".config/fish/conf.d/**",
+
     ".config/fish/functions/",
+    ".config/fish/functions/**",
+
     ".config/fish/themes/",
+    ".config/fish/themes/**",
+
     ".config/fish/executable_config.fish",
-    ".config/fish/executable_config.fish.old",
-    ".config/fish/executable_config.fish.save",
     ".config/fish/executable_fish_variables",
     ".config/fish/fish_plugins",
+    ".config/fish/fish_variables",
 ]
