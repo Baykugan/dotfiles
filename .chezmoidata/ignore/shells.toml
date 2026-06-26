@@ -1,8 +1,20 @@
+[ignore.shells.shared_posix.paths]
+core = [
+    ".config/shell/shrc"
+]
+
+extras = [
+    ".config/shell/shrc.d/",
+    ".config/shell/shrc.d/**",
+]
+
 [ignore.shells.bash.paths]
 core = [
     ".bashrc"
 ]
 extras = [
+    ".config/bashrc.d/",
+    ".config/bashrc.d/**",
     ".config/shell/bashrc.d/",
     ".config/shell/bashrc.d/**",
 ]
@@ -13,6 +25,8 @@ core = [
 ]
 
 extras = [
+  ".config/zshrc.d/",
+  ".config/zshrc.d/**",
   ".config/shell/zshrc.d/",
   ".config/shell/zshrc.d/**",
 ]

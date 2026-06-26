@@ -4,6 +4,22 @@
   "fish" .fish_profile
 }}
 
+{{- $managedPosixShell := or
+  (or (eq .bash_profile "minimal") (eq .bash_profile "full"))
+  (or (eq .zsh_profile "minimal") (eq .zsh_profile "full"))
+}}
+
+{{- $shared := .ignore.shells.shared_posix.paths }}
+{{- $sharedCore := index $shared "core" }}
+{{- $sharedExtras := index $shared "extras" }}
+{{- $sharedAll := concat $sharedCore $sharedExtras }}
+
+{{- if not $managedPosixShell }}
+{{- range $sharedAll }}
+{{ . }}
+{{- end }}
+{{- end }}
+
 {{- range $shell, $profile := $shells }}
 {{- $paths := index $.ignore.shells $shell "paths" }}
 {{- $core := index $paths "core" }}
