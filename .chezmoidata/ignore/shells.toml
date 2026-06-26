@@ -21,21 +21,31 @@ extras = [
 
 [ignore.shells.zsh.paths]
 core = [
-  ".zshrc",
+    ".zshrc",
 ]
 
 extras = [
-  ".config/zshrc.d/",
-  ".config/zshrc.d/**",
-  ".config/shell/zshrc.d/",
-  ".config/shell/zshrc.d/**",
+    ".config/zshrc.d/",
+    ".config/zshrc.d/**",
+    ".config/shell/zshrc.d/",
+    ".config/shell/zshrc.d/**",
 ]
 
 
 [ignore.shells.fish.paths]
 core = [
-  ".config/fish/config.fish",
+    ".config/fish/",
+    ".config/fish/config.fish",
 ]
 
 extras = [
+    ".config/fish/completions/",
+    ".config/fish/conf.d/",
+    ".config/fish/functions/",
+    ".config/fish/themes/",
+    ".config/fish/executable_config.fish",
+    ".config/fish/executable_config.fish.old",
+    ".config/fish/executable_config.fish.save",
+    ".config/fish/executable_fish_variables",
+    ".config/fish/fish_plugins",
 ]

@@ -8,6 +8,15 @@ bash_profile = "minimal"
 zsh_profile = "minimal"
 fish_profile = "full"
 
+apps = [
+    "kitty",
+    "git",
+    "mal_cli",
+    "cava",
+    "fastfetch",
+    "kando",
+]
+
 {{- else if eq .chezmoi.hostname "Tehom" }}
 desktop_profile = "kde"
 distro = "nobara"
@@ -15,6 +24,15 @@ distro = "nobara"
 bash_profile = "full"
 zsh_profile = "full"
 fish_profile = "full"
+
+apps = [
+    "kitty",
+    "git",
+    "mal_cli",
+    "cava",
+    "fastfetch",
+    "kando",
+]
 
 
 {{- else if eq .chezmoi.hostname "Kontoret" }}
@@ -25,6 +43,12 @@ distro = "debian"
 bash_profile = "minimal"
 zsh_profile = "none"
 fish_profile = "none"
+
+apps = [
+    "kitty",
+    "git",
+    "fastfetch",
+]
 
 
 {{- else }}
