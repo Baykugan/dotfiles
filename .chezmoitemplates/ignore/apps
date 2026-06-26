@@ -1,0 +1,7 @@
+{{- range $app, $paths := .ignore.apps.paths }}
+{{- if not (has $app $.apps) }}
+{{- range $paths }}
+{{ . }}
+{{- end }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,30 @@
+[ignore.apps.paths]
+kitty = [
+  ".config/kitty/",
+  ".config/kitty/**",
+]
+
+mal_cli = [
+    ".config/mal-cli/",
+    ".config/mal-cli/**",
+]
+
+cava = [
+    ".config/cava/",
+    ".config/cava/**",
+]
+
+fastfetch = [
+    ".config/fastfetch/",
+    ".config/fastfetch/**",
+]
+
+git = [
+    ".config/git/",
+    ".config/git/**",
+]
+
+kando = [
+    ".config/kando/",
+    ".config/kando/**",
+]
