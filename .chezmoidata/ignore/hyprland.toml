@@ -13,8 +13,10 @@ base = [
   ".config/hyprlock/",
   ".config/hyprlock/**",
   ".config/zshrc.d/auto-Hypr.sh",
-  ".config/zshrc.d/dots-hyprland.zsh",
   ".config/bashrc.d/auto-Hypr.sh",
+  ".config/bashrc.d/dots-hyprland.zsh",
+  ".config/bashrc.d/auto-Hypr.sh",
+  ".config/fish/auto-Hypr.fish",
 ]
 
 kooldots = [
