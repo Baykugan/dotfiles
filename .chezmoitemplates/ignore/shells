@@ -1,23 +1,33 @@
-{{- $zshOnly := list
-  ".config/zshrc.d/"
-  ".config/zshrc.d/**"
-  ".zshrc"
+{{- $shells := dict
+  "bash" .bash_profile
+  "zsh" .zsh_profile
+  "fish" .fish_profile
 }}
 
-{{- $bashOnly := list
-  ".config/bashrc.d/"
-  ".config/bashrc.d/**"
-  ".bashrc"
-}}
+{{- range $shell, $profile := $shells }}
+{{- $paths := index $.ignore.shells $shell "paths" }}
+{{- $core := index $paths "core" }}
+{{- $extras := index $paths "extras" }}
+{{- $all := concat $core $extras }}
 
-{{- if not (has "zsh" .shells) }}
-{{- range $zshOnly }}
+{{- if or (eq $profile "none") (eq $profile "unmanaged") }}
+{{- range $all }}
+{{ . }}
+{{- end }}
+
+{{- else if eq $profile "minimal" }}
+{{- range $extras }}
+{{ . }}
+{{- end }}
+
+{{- else if eq $profile "full" }}
+{{- /* ignore nothing */ -}}
+
+{{- else }}
+{{- /* unknown profile: safe default, ignore all */ -}}
+{{- range $all }}
 {{ . }}
 {{- end }}
 {{- end }}
 
-{{- if not (has "bash" .shells) }}
-{{- range $bashOnly }}
-{{ . }}
-{{- end }}
 {{- end }}

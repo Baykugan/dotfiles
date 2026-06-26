@@ -1,0 +1,27 @@
+[ignore.shells.bash.paths]
+core = [
+    ".bashrc"
+]
+extras = [
+    ".config/shell/bashrc.d/",
+    ".config/shell/bashrc.d/**",
+]
+
+[ignore.shells.zsh.paths]
+core = [
+  ".zshrc",
+]
+
+extras = [
+  ".config/shell/zshrc.d/",
+  ".config/shell/zshrc.d/**",
+]
+
+
+[ignore.shells.fish.paths]
+core = [
+  ".config/fish/config.fish",
+]
+
+extras = [
+]
